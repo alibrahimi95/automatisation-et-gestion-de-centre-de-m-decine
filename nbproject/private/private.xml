@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/src/java/com/gestionCMT/dao/TraitementDAOImpl.java</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/src/java/com/gestionCMT/Myfilter.java</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/src/java/com/gestionCMT/services/TraitementServices.java</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/src/java/com/gestionCMT/dao/UsersDAO.java</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/src/java/com/gestionCMT/dao/VisiteDAO.java</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/src/java/com/gestionCMT/services/AntecedentServicesImpl.java</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/src/java/config/HibernateUtil.java</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/src/java/config/Test.java</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/src/java/com/gestionCMT/presentation/ExamenBean.java</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/src/java/com/gestionCMT/services/VisiteServices.java</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/src/java/com/gestionCMT/services/VisiteServicesImpl.java</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/web/consultation.xhtml</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/src/java/com/gestionCMT/entity/Visite.java</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/src/java/com/gestionCMT/presentation/UsersBean.java</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/src/java/com/gestionCMT/dao/RespiratoireDAOImpl.java</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/src/java/config/hibernate.cfg.xml</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/src/java/com/gestionCMT/presentation/PatientBean.java</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/web/patient.xhtml</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/src/java/com/gestionCMT/entity/Consultation.java</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/src/java/com/gestionCMT/presentation/ConsultationBean.java</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/src/java/com/gestionCMT/dao/ExamenDAOImpl.java</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/src/java/com/gestionCMT/dao/UsersDAOImpl.java</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/src/java/com/gestionCMT/dao/TraitementDAO.java</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/src/java/com/gestionCMT/entity/Antecedent.java</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/src/java/com/gestionCMT/entity/Examen.java</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/src/java/com/gestionCMT/dao/LocomoteurDAOImpl.java</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/web/listPatient.xhtml</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/src/java/com/gestionCMT/services/AntecedentServices.java</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/src/java/com/gestionCMT/services/TraitementServicesImpl.java</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/src/java/com/gestionCMT/dao/RespiratoireDAO.java</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/src/java/com/gestionCMT/services/RespiratoireServicesImpl.java</file>
+            <file>file:/C:/Users/slim/Documents/NetBeansProjects/ENIEM/web/index.xhtml</file>
+        </group>
+    </open-files>
+</project-private>

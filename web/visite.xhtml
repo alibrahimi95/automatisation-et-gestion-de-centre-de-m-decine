@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+<h:head>
+  <title>Visite</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <h:outputStylesheet library="css" name="bootstrap.min.css" />
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+  </style>
+</h:head>
+<h:body>
+
+<nav class="navbar navbar-inverse" style="height: 90px;">
+        <div class="container-fluid" style="height: 90px;" >
+            <div  class="navbar-header" style="height: 90px;" >
+      
+        <h:link class="navbar-brand" style="height: 90px;" outcome="listPatient.xhtml"><h:graphicImage library="img" name="home.png" height="100%" width="150px" />
+        </h:link>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar" style="margin-top: 40px;">
+      <ul class="nav navbar-nav">
+        <li ><h:link value="details" outcome="patient.xhtml" ></h:link></li>
+        <li class="active"><h:link rendered="#{usersBean.show}" value="Visites" outcome="visite.xhtml" ></h:link></li>
+        <li ><h:link rendered="#{usersBean.show}" value="Consultations" outcome="consultation.xhtml" ></h:link></li>
+        <li ><h:link value="Traitements" outcome="traitement.xhtml" ></h:link></li>
+        <li ><h:link value="Examens" outcome="examen.xhtml" ></h:link></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+          <li style="margin-right: 5px; color: white;">
+              <h4><h:outputText value="#{usersBean.user.nom}  #{usersBean.user.prenom}  "></h:outputText></h4>
+          </li>
+        <li><h:form>
+                <h:commandButton class="btn btn-danger" style="margin-top: 7px;" value="deconexion" action="#{usersBean.logout()}" />
+    </h:form></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+
+<div class="container">
+    <div class="row">
+		<div class="col-md-12">
+            <h3 class="col-md-10">Liste des visites</h3>
+            <h:link rendered="#{usersBean.showV}" class="btn btn-info" value="Ajouter une visite" outcome="visiteAdd.xhtml" ></h:link>
+            
+        </div>
+        </div>
+            
+            <input id="myInput" type="text" class="form-control " placeholder="Rechercher.."/>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <h:dataTable id="myTable" value="#{visiteBean.visiteList}" var="v" class="table table-bordred table-striped">   
+              
+                    <tbody>
+            <h:column>
+                <f:facet name = "header">Type</f:facet> 
+                <h:outputText value="#{v.typeV}"></h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name = "header">Date de la visite</f:facet> 
+                <h:outputText value="#{v.dateV}"></h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name = "header">Medecin</f:facet> 
+                <h:outputText value="#{visiteBean.NomMed(v.idUser)}"></h:outputText>
+            </h:column>
+            
+            <h:column>
+                <f:facet name = "header">Details</f:facet> 
+                
+                <h:link value="details" outcome="visiteD.xhtml" >
+                    <f:param name="idV" value="#{v.id_visite}"></f:param>
+                </h:link>
+            </h:column>
+    
+       
+    </tbody>
+        
+             </h:dataTable>
+                        
+
+<div class="clearfix"></div>
+
+                
+            </div>
+                    
+            
+        </div>
+    </div>
+</div>
+    
+        <script src="resources/js/jquery.js"></script>
+        <script src="resources/js/myjs.js"></script>
+        <script src="resources/js/bootstrap.min.js"></script>
+</h:body>
+</html>
+
+

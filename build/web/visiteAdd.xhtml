@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+<h:head>
+  <title>Ajout visite</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <h:outputStylesheet library="css" name="bootstrap.min.css" />
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+  </style>
+</h:head>
+<h:body>
+
+<nav class="navbar navbar-inverse" style="height: 90px;">
+        <div class="container-fluid" style="height: 90px;" >
+            <div  class="navbar-header" style="height: 90px;" >
+      
+        <h:link class="navbar-brand" style="height: 90px;" outcome="listPatient.xhtml"><h:graphicImage library="img" name="home.png" height="100%" width="150px" />
+        </h:link>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar" style="margin-top: 40px;">
+      <ul class="nav navbar-nav">
+        <li ><h:link value="details" outcome="patient.xhtml" ></h:link></li>
+        <li class="active"><h:link rendered="#{usersBean.show}" value="Visites" outcome="visite.xhtml" ></h:link></li>
+        <li ><h:link rendered="#{usersBean.show}" value="Consultations" outcome="consultation.xhtml" ></h:link></li>
+        <li ><h:link value="Traitements" outcome="traitement.xhtml" ></h:link></li>
+        <li ><h:link value="Examens" outcome="examen.xhtml" ></h:link></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+          <li style="margin-right: 5px; color: white;">
+              <h4><h:outputText value="#{usersBean.user.nom}  #{usersBean.user.prenom}  "></h:outputText></h4>
+          </li>
+        <li><h:form>
+                <h:commandButton class="btn btn-danger" style="margin-top: 7px;" value="deconexion" action="#{usersBean.logout()}" />
+    </h:form></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+
+<div class="container">
+    <div class="row">
+		<div class="col-md-12">
+			
+    <h2 class="style1 col-md-9">Informations Générales</h2>    
+   <h:form class="form-horizontal col-md-9">
+                
+                <div class="form-group ">
+                    <h:outputLabel class="control-label col-md-3" value="Type :" for="type"></h:outputLabel>
+                    <div class="col-md-9">
+                        <h:selectOneMenu class="form-control" id="type" value="#{visiteAdBean.typeV}" required="true">
+                <f:selectItem itemValue="embauche" itemLabel="embauche"/>
+                <f:selectItem itemValue="periodique" itemLabel="periodique"/>
+                <f:selectItem itemValue="redeploiment" itemLabel="redeploiment"/>
+            </h:selectOneMenu>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <h:outputLabel class="control-label col-md-3" value="Date :" for="dateV"></h:outputLabel>
+                    <div class="col-md-9">
+                        <h:inputText class="form-control" value="#{visiteAdBean.dateV}" validatorMessage="veuillez suivre ce format jj/mm/aaaa" id="dateV">
+                        <f:validateRegex 
+                   pattern="^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$" />
+                        </h:inputText>
+                        <h:message for="dateV" style="color:red"  />
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Poids du patient:" for="poids"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:inputText class="form-control" value="#{visiteAdBean.poids}" id="poids" validatorMessage="indiquer un poids valide">
+                    <f:validateRegex 
+                   pattern="[0-9]{2}" />
+                    </h:inputText>
+                    <h:message for="poids" style="color:red"  />
+                </div>
+                </div>
+                
+                <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Taille du patient(Cm) :" for="taille"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:inputText class="form-control" value="#{visiteAdBean.taille}" id="taille" validatorMessage="indiquer une taille entre 100 et 200 cm">
+                    <f:validateRegex 
+                   pattern="1[0-9]{2}|200" />
+                    </h:inputText>
+                    <h:message for="taille" style="color:red"  />
+                 
+                </div>
+                </div>
+                
+                <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Urines :" for="urines"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:inputText class="form-control" value="#{visiteAdBean.urines}" id="urines"></h:inputText>
+                </div>
+                </div>
+                
+                <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Oeil droit :" for="od"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:inputText class="form-control" value="#{visiteAdBean.auditionOD}" id="od" validatorMessage="valeur entre 4 et 10">
+                    <f:validateRegex 
+                   pattern="4|5|6|7|8|9|10" />
+                    </h:inputText>
+                    <h:message for="od" style="color:red"  />
+                </div>
+                </div>
+                
+                
+                
+                <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="oeil gauche :" for="og"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:inputText class="form-control" value="#{visiteAdBean.auditionOG}" id="og" validatorMessage="valeur entre 4 et 10">
+                    <f:validateRegex 
+                   pattern="4|5|6|7|8|9|10" />
+                    </h:inputText>
+                    <h:message for="og" style="color:red"  />
+                </div>
+                </div>
+                
+                <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Vision sans correction :" for="vsc"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:inputText class="form-control" value="#{visiteAdBean.visionSCorrection}" id="vsc"></h:inputText>
+                </div>
+                </div>
+                
+                <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Vision avec correction :" for="vac"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:inputText class="form-control" value="#{visiteAdBean.visionACorrection}" id="vac"></h:inputText>
+                </div>
+                </div>
+       
+       
+       <h2>OPHT</h2>
+        <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Larmoiement :" for="larmoiement"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:selectBooleanCheckbox class="form-control" value="#{visiteAdBean.larmoiment}" id="larmoiement" />
+
+                </div>
+                </div>
+       <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Douleur :" for="douleurO"></h:outputLabel>
+                <div class="col-md-9">
+                  
+                    <h:selectBooleanCheckbox class="form-control" value="#{visiteAdBean.douleurO}" id="douleurO" />
+
+                </div>
+                </div>
+       
+       <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Oeil rouge :" for="or"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:selectBooleanCheckbox class="form-control" value="#{visiteAdBean.oeilRouge}" id="or" />
+
+                </div>
+                </div>
+       
+       <div class="form-group">
+           
+                <h:outputLabel class="control-label col-md-3" value="Taches devant les yeux :" for="taches"></h:outputLabel>
+                <div class="col-md-9">
+                    
+                    <h:selectBooleanCheckbox class="form-control" value="#{visiteAdBean.taches}" id="taches" />
+                </div>
+                </div>
+        
+       <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Fatigue :" for="fatigue"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:selectBooleanCheckbox class="form-control" value="#{visiteAdBean.fatigue}" id="fatigue" />
+                   
+                </div>
+                </div>
+       
+       <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Autres :" for="autresO"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:inputText class="form-control" id="autresO" value="#{visiteAdBean.autreO}"></h:inputText>
+                </div>
+                </div>
+                
+       
+       <h2>O.R.L</h2>
+       
+       <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Sifflement :" for="Sifflement"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:selectBooleanCheckbox class="form-control" value="#{visiteAdBean.sifflement}" id="Sifflement" />
+
+                </div>
+                </div>
+       <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Engines répétées :" for="engines"></h:outputLabel>
+                <div class="col-md-9">
+                  
+                    <h:selectBooleanCheckbox class="form-control" value="#{visiteAdBean.engines}" id="engines" />
+
+                </div>
+                </div>
+       
+       <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Epistaxis :" for="epis"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:selectBooleanCheckbox class="form-control" value="#{visiteAdBean.epistaxis}" id="epis" />
+
+                </div>
+                </div>
+       
+       <div class="form-group">
+           
+                <h:outputLabel class="control-label col-md-3" value="Entend mal :" for="entend"></h:outputLabel>
+                <div class="col-md-9">
+                    
+                    <h:selectBooleanCheckbox class="form-control" value="#{visiteAdBean.entendMal}" id="entend" />
+                </div>
+                </div>
+        
+       <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Otorrhées :" for="Otorrhées"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:selectBooleanCheckbox class="form-control" value="#{visiteAdBean.otorrhees}" id="Otorrhées" />
+                   
+                </div>
+                </div>
+       
+       <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Eternument :" for="eternument"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:selectBooleanCheckbox class="form-control" value="#{visiteAdBean.eternument}" id="eternument" />
+                   
+                </div>
+                </div>
+       
+       <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Rhinorrhée :" for="rhinorrhe"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:inputText class="form-control" id="rhinorrhe" value="#{visiteAdBean.rhinorrhee}"></h:inputText>
+                </div>
+                </div>
+       
+       <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Autres :" for="autresOrl"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:inputText class="form-control" id="autresOrl" value="#{visiteAdBean.autreOrl}"></h:inputText>
+                </div>
+                </div>
+       
+       <h2>Locomoteur</h2>
+       
+       <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Douleur :" for="douleur"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:selectOneRadio class="form-control" value="#{visiteAdBean.douleurL}" id="douleur">
+                <f:selectItem itemValue="musculaires" itemLabel="musculaires"></f:selectItem>
+                <f:selectItem itemValue="articulaires" itemLabel="articulaires"></f:selectItem>
+                <f:selectItem itemValue="vertebrales" itemLabel="vertebrales"></f:selectItem>
+                <f:selectItem itemValue="nevralgique" itemLabel="nevralgique"></f:selectItem>
+                </h:selectOneRadio>
+                </div>
+                </div>
+               
+       <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Géne des mouvements :" for="gene"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:inputText class="form-control" id="gene" value="#{visiteAdBean.géneM}"></h:inputText>
+                </div>
+                </div>
+       
+        <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Fatigabilité :" for="fatig"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:inputText class="form-control" id="fatig" value="#{visiteAdBean.fatigabilité}"></h:inputText>
+                </div>
+                </div>
+       
+       <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Autres :" for="autresL"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:inputText class="form-control" id="autresL" value="#{visiteAdBean.autreLoc}"></h:inputText>
+                </div>
+                </div>
+       
+       <h2>Respiratoire</h2>
+                <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Toux :" for="toux"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:selectBooleanCheckbox class="form-control" value="#{visiteAdBean.toux}" id="toux" />
+                   
+                </div>
+                </div>
+                
+       <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Dysnée :" for="dysne"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:selectOneRadio class="form-control" value="#{visiteAdBean.dysnee}" id="dysne">
+                <f:selectItem itemValue="nocturne" itemLabel="nocturne"></f:selectItem>
+                <f:selectItem itemValue="durne" itemLabel="durne"></f:selectItem>
+                
+                </h:selectOneRadio>
+                </div>
+                </div>
+               
+       <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Exoectorations :" for="exo"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:inputText class="form-control" id="exo" value="#{visiteAdBean.exoectorations}"></h:inputText>
+                </div>
+                </div>
+       
+       <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Douleurs thoraciques :" for="dt"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:selectBooleanCheckbox class="form-control" value="#{visiteAdBean.douleursT}" id="dt" />
+                   
+                </div>
+                </div>
+       
+        <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Tabac :" for="tabac"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:selectBooleanCheckbox class="form-control" value="#{visiteAdBean.tabac}" id="tabac" />
+                   
+                </div>
+                </div>
+       
+       <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Autres :" for="autresR"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:inputText class="form-control" id="autresR" value="#{visiteAdBean.autreR}"></h:inputText>
+                </div>
+                </div>
+       
+       <h:commandButton class="btn btn-primary btn-lg col-md-offset-10 col-md-2" value="Ajouter" actionListener="#{visiteAdBean.addvisite()}" ></h:commandButton>
+
+            </h:form>
+</div>
+						</div>
+						
+    </div>
+    
+        <script src="resources/js/jquery.js"></script>
+        <script src="resources/js/myjs.js"></script>
+        <script src="resources/js/bootstrap.min.js"></script>
+</h:body>
+</html>
+
+

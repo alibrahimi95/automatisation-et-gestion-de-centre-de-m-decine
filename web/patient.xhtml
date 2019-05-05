@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+<h:head>
+  <title>Patient</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <h:outputStylesheet library="css" name="bootstrap.min.css" />
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    .style5{
+        background-color: #fff;
+	border-top: 2px dashed #8c8b8b;
+        width: 90%;
+    }
+    .style1{
+	border-bottom: 2px solid blue;
+}
+.cacher{
+    display: none;
+}
+.montrer{
+    display: block;
+}
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+  </style>
+</h:head>
+<h:body>
+
+    <nav class="navbar navbar-inverse" style="height: 90px;">
+        <div class="container-fluid" style="height: 90px;" >
+            <div  class="navbar-header" style="height: 90px;" >
+      
+        <h:link class="navbar-brand" style="height: 90px;" outcome="listPatient.xhtml"><h:graphicImage library="img" name="home.png" height="100%" width="150px" />
+        </h:link>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar" style="margin-top: 40px;">
+      <ul class="nav navbar-nav">
+        <li class="active"><h:link value="details" outcome="patient.xhtml" ></h:link></li>
+        <li ><h:link rendered="#{usersBean.show}" value="Visites" outcome="visite.xhtml" ></h:link></li>
+        <li ><h:link rendered="#{usersBean.show}" value="Consultations" outcome="consultation.xhtml" ></h:link></li>
+        <li ><h:link value="Traitements" outcome="traitement.xhtml" ></h:link></li>
+        <li ><h:link value="Examens" outcome="examen.xhtml" ></h:link></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+          <li style="margin-right: 5px; color: white;">
+              <h4><h:outputText value="#{usersBean.user.nom}  #{usersBean.user.prenom}  "></h:outputText></h4>
+          </li>
+        <li><h:form>
+                <h:commandButton class="btn btn-danger" style="margin-top: 7px;" value="deconexion" action="#{usersBean.logout()}" />
+    </h:form></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+<div class="container-fluid">
+    <h2 class="style1 col-md-12">Information Générale</h2>    
+    <h:form class="form-horizontal col-md-12" style="margin-top: 20px;">
+                
+                <div class="form-group col-md-6">
+                    <h:outputLabel class="control-label col-md-3" value="Nom :" for="nom"></h:outputLabel>
+                    <div class="col-md-9">
+                        <h:inputText class="form-control" value="#{patientBean.p.nomP}" id="nom" validatorMessage="veillez entrer un nom valide">
+                            <f:validateRegex 
+                   pattern="^[a-zA-Z\\s]+" />
+                        </h:inputText>
+                        <h:message for="nom" style="color:red"  />
+                        
+                    </div>
+                </div>
+                
+                <div class="form-group col-md-6">
+                    <h:outputLabel class="control-label col-md-3" value="Prenom :" for="prenom"></h:outputLabel>
+                    <div class="col-md-9">
+                        <h:inputText class="form-control" value="#{patientBean.p.prenomP}" id="prenom" validatorMessage="veillez entrer un Prenom valide">
+                            <f:validateRegex 
+                   pattern="^[a-zA-Z\\s]+" />
+                        </h:inputText>
+                        <h:message for="prenom" style="color:red"  />
+                        
+                    </div>
+                </div>
+                
+                <div class="form-group col-md-6">
+                <h:outputLabel class="control-label col-md-3" value="Adresse :" for="adresse"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:inputText class="form-control" value="#{patientBean.p.adresse}" id="adresse"></h:inputText>
+                </div>
+                </div>
+                
+                <div class="form-group col-md-6">
+                <h:outputLabel class="control-label col-md-3" value="Date de naissance :" for="date"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:inputText class="form-control" value="#{patientBean.p.dateNaissance}" validatorMessage="veuillez suivre ce format jj/mm/aaaa" id="date">
+                        <f:validateRegex 
+                   pattern="^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$" />
+                        </h:inputText>
+                        <h:message for="date" style="color:red"  />
+                   
+               
+                </div>
+                </div>
+                
+                <div class="form-group col-md-6">
+                <h:outputLabel class="control-label col-md-3" value="Lieu de naissance :" for="lieu"></h:outputLabel>
+                <div class="col-md-9">
+                <h:inputText class="form-control" value="#{patientBean.p.lieuNaissance}" id="lieu"></h:inputText>
+                </div>
+                </div>
+                
+                <div class="form-group col-md-6">
+                <h:outputLabel class="control-label col-md-3" value="Service :" for="service"></h:outputLabel>
+                <div class="col-md-9">
+                <h:inputText class="form-control" value="#{patientBean.p.serviceT}" id="service"></h:inputText><br/>
+                </div>
+                </div>
+                
+                <div class="form-group col-md-6">
+                <h:outputLabel class="control-label col-md-3" value="Sexe :" for="sexe"></h:outputLabel>
+                <div class="col-md-9">
+                <h:selectOneRadio  value="#{patientBean.p.sexe}" id="sexe">
+                <f:selectItem itemValue="masculin" itemLabel="masculin"></f:selectItem>
+                <f:selectItem itemValue="feminin" itemLabel="feminin"></f:selectItem>
+                </h:selectOneRadio>
+                </div>
+                </div>
+                
+                <div class="form-group col-md-6">
+                <h:outputLabel class="control-label col-md-3" value="Num securité sociale :" for="nums"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:inputText class="form-control" value="#{patientBean.p.numSecSoc}" id="nums" maxlength="13" validatorMessage="veuillez saisir un numero de Sec Soc valide">
+                    <f:validateRegex 
+                   pattern="[0-9]{13}" />
+                    </h:inputText>
+                     <h:message for="nums" style="color:red"  />
+                </div>
+                </div>
+                
+                <div class="form-group col-md-6">
+                <h:outputLabel class="control-label col-md-3" value="Formation :" for="formation"></h:outputLabel>
+                <div class="col-md-9">
+                <h:inputText class="form-control" value="#{patientBean.p.formation}" id="formation"></h:inputText>
+                </div>
+                </div>
+                
+                <div class="form-group col-md-6">
+                <h:outputLabel class="control-label col-md-3" value="Service national :" for="servn"></h:outputLabel>
+                <div class="col-md-9">
+                <h:selectOneMenu class="form-control" id="servn" value="#{patientBean.p.servN}">
+                <f:selectItem itemValue="accompli" itemLabel="accompli"/>
+                <f:selectItem itemValue="dispensé" itemLabel="dispensé"/>
+                <f:selectItem itemValue="inapte" itemLabel="inapte"/>
+            </h:selectOneMenu>
+                </div>
+                </div>
+                
+                <div class="form-group col-md-6">
+                <h:outputLabel class="control-label col-md-3" value="Situation familliale :" for="sit"></h:outputLabel>
+                <div class="col-md-9">
+                <h:selectOneMenu class="form-control" id="sit" value="#{patientBean.p.sfamiliale}">
+                <f:selectItem itemValue="celibataire" itemLabel="celibataire"/>
+                <f:selectItem itemValue="fiancé" itemLabel="fiancé"/>
+                <f:selectItem itemValue="marié" itemLabel="marié"/>
+                <f:selectItem itemValue="divorcé" itemLabel="divorcé"/>
+            </h:selectOneMenu>
+                </div>
+                </div>
+                
+                
+                
+                <div class="form-group col-md-6">
+                <h:outputLabel class="control-label col-md-3" value="Aptitude au travail :" for="aptitude"></h:outputLabel>
+                <div class="col-md-9">
+                <h:selectOneMenu class="form-control" id="aptitude" value="#{patientBean.p.aptitudeT}">
+                <f:selectItem itemValue="apte" itemLabel="Apte"/>
+                <f:selectItem itemValue="inapte temporaire" itemLabel="inapte temporaire"/>
+                <f:selectItem itemValue="inapte" itemLabel="inapte"/>
+            </h:selectOneMenu>
+                </div>
+                </div>
+       <h:inputHidden value="#{patientBean.p.id_patient}"/>
+                
+                
+       <h:commandButton class="btn btn-primary btn-lg col-md-offset-10 col-md-2" value="modifier" actionListener="#{patientBean.editePatient()}" ></h:commandButton>
+
+            </h:form>
+</div>
+    <br/>
+        <hr class="style5"/>
+<br/>
+    <div class="container-fluid ">
+        
+        <div class="row">
+            <div class="col-md-9 style1">
+                <h3 class="col-md-9" style="margin-right: 30px;">Liste des Antecedents</h3>
+                <button type="button" class="btn btn-success btn-lg " data-toggle="modal" data-target="#myModal">Ajouter un antecedent</button>
+            </div>
+        </div>
+ 
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="table-responsive">
+                        <h:dataTable id="myTable" value="#{patientBean.antecedentList}" var="a" class="table table-bordred table-striped">   
+              
+                    <tbody>
+            
+            <h:column>
+                <f:facet name = "header">Type</f:facet> 
+                <h:outputText value="#{a.typeA}"></h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name = "header">Description</f:facet> 
+                <h:outputText value="#{a.descriptionA}"></h:outputText>
+            </h:column>
+            
+            <h:column>
+                <f:facet name = "header">Tache</f:facet> 
+                <h:form>
+                    <h:commandButton id="btnmd" class="btn btn-info" value="modifier" actionListener="#{patientBean.showA(a.id_antecedents)}" ></h:commandButton>
+                </h:form>
+                
+            </h:column>
+    
+       
+    </tbody>
+        
+             </h:dataTable>
+        
+                    </div>
+                </div>
+            </div>
+    </div>
+
+<!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">x</button>
+          
+              <h2 class="modal-title">Nouveau Antecedent </h2>
+        </div>
+        <div class="modal-body">
+            <h:form class="form-horizontal">
+                
+                <div class="form-group ">
+                    <h:outputLabel class="control-label col-md-3" value="Type :" for="type"></h:outputLabel>
+                    <div class="col-md-9">
+                        <input type="text" id="type" class="form-control" jsf:value="#{patientBean.typeA}"/>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <h:outputLabel class="control-label col-md-3" value="Description :" for="description"></h:outputLabel>
+                    <div class="col-md-9">
+                        <h:inputText class="form-control" value="#{patientBean.descriptionA}" id="description"></h:inputText>
+                    </div>
+                </div>
+                 <h:commandButton class="btn btn-primary btn-lg col-md-12" value="ajouter" actionListener="#{patientBean.addAntecedent()}"></h:commandButton>
+            </h:form>
+        </div></div>
+       
+        <div class="modal-footer">
+          
+        </div>
+    </div></div>
+      
+    
+<!-- Modal Edition-->
+<h:panelGroup >
+        <h:messages>
+            
+        </h:messages>
+        <div class="row">
+        <div class="col-md-9">
+          
+              <h2 class="modal-title">Modifier Antecedent </h2>
+        
+       
+            <h:form class="form-horizontal text-center">
+                
+                <div class="form-group ">
+                    <h:outputLabel class="control-label col-md-3" value="Type :" for="type"></h:outputLabel>
+                    <div class="col-md-9">
+                        <input type="text" id="type" class="form-control" jsf:value="#{patientBean.antec.typeA}"/>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <h:outputLabel class="control-label col-md-3" value="Description :" for="description"></h:outputLabel>
+                    <div class="col-md-9">
+                        <h:inputText class="form-control" value="#{patientBean.antec.descriptionA}" id="description"></h:inputText>
+                    </div>
+                </div>
+                <h:inputHidden value="#{patientBean.antec.id_antecedents}"/>
+                <h:inputHidden value="#{patientBean.antec.id_pat}"/>
+                <h:commandButton class="btn btn-primary btn-lg col-md-offset-6 col-md-3" value="modifier" actionListener="#{patientBean.editAntecedent()}"></h:commandButton>
+            </h:form>
+        </div></div>
+       
+       
+</h:panelGroup>
+
+
+
+    
+        <script src="resources/js/jquery.js"></script>
+        <script src="resources/js/myjs.js"></script>
+        <script src="resources/js/mod.js"></script>
+        <script src="resources/js/bootstrap.min.js"></script>
+</h:body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <h:head>
+        <meta charset="utf-8"/>
+            <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+            <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        <h:outputStylesheet library="css" name="bootstrap.min.css" />
+        <title>Liste des Patients</title>
+        <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+    
+  </style>
+  
+    </h:head>
+    <h:body>
+      
+        <nav class="navbar ">
+  <div class="container-fluid">
+      <div class="navbar-header" style="height: 150px; margin-left: 50px;">
+                <a class="navbar-brand" href="#" style="height: 100%">
+                    <h:graphicImage library="img" name="logo.png" height="100%" width="150px" />
+                </a>
+            </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      
+        <ul class="nav navbar-nav navbar-right" style="margin-top: 90px; margin-right: 50px;">
+          <li style="margin-right: 5px;">
+              <h4><h:outputText value="#{usersBean.user.nom}  #{usersBean.user.prenom}  "></h:outputText></h4>
+          </li>
+          <li><h:form>
+                  <h:commandButton class="btn btn-danger" value="deconnexion" action="#{usersBean.logout()}" />
+    </h:form>
+          </li>
+      </ul>
+    </div>
+      </div>
+</nav>
+
+      
+         
+        <div class="container">
+            <h:messages class="alert alert-danger">
+  
+            </h:messages>
+            
+	<div class="row">
+		
+        
+        <div class="col-md-12">
+            <h3 class="col-md-10">Liste des patients</h3>
+            
+            <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal">Ajouter un patient</button>
+            
+        </div>
+        </div>
+            
+            <input id="myInput" type="text" class="form-control " placeholder="Rechercher.."/>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <h:dataTable id="myTable" value="#{patientTBean.patientList}" var="p" class="table table-bordred table-striped">   
+              
+                    <tbody>
+            <h:column>
+                <f:facet name = "header">identifiant</f:facet> 
+                <h:outputText value="#{p.id_patient}"></h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name = "header">Nom</f:facet> 
+                <h:outputText value="#{p.nomP}"></h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name = "header">Prenom</f:facet> 
+                <h:outputText value="#{p.prenomP}"></h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name = "header">Securité social</f:facet> 
+                <h:outputText value="#{p.numSecSoc}"></h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name = "header">Service</f:facet> 
+                <h:outputText value="#{p.serviceT}"></h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name = "header">Details</f:facet> 
+                
+                <h:link value="details" outcome="patient.xhtml" >
+                    <f:param name="id" value="#{p.id_patient}"></f:param>
+                </h:link>
+            </h:column>
+    
+       
+    </tbody>
+        
+             </h:dataTable>
+                        
+
+<div class="clearfix"></div>
+
+                
+            </div>
+                    
+            
+        </div>
+	</div>
+</div>
+        
+  
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">x</button>
+          <h4 class="modal-title">Nouveau Patient</h4>
+        </div>
+        <div class="modal-body">
+            <h:form class="form-horizontal">
+                
+                <div class="form-group ">
+                    <h:outputLabel class="control-label col-md-3" value="Nom :" for="nom"></h:outputLabel>
+                    <div class="col-md-9">
+                       
+                        <h:inputText class="form-control" value="#{patientTBean.nomP}" id="nom" validatorMessage="veillez entrer un nom valide">
+                            <f:validateRegex 
+                   pattern="^[a-zA-Z\\s]+" />
+                        </h:inputText>
+                        <h:message for="nom" style="color:red"  />
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <h:outputLabel class="control-label col-md-3" value="Prenom :" for="prenom"></h:outputLabel>
+                    <div class="col-md-9">
+                        <h:inputText class="form-control" value="#{patientTBean.prenomP}" id="prenom" validatorMessage="veillez entrer un prenom valide">
+                            <f:validateRegex 
+                   pattern="^[a-zA-Z\\s]+" />
+                        </h:inputText>
+                        <h:message for="prenom" style="color:red"  />
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Adresse :" for="adresse"></h:outputLabel>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" jsf:value="#{patientTBean.adresse}" id="adresse" required="true"></input>
+                </div>
+                </div>
+                
+                <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Date de naissance :" for="date"></h:outputLabel>
+                <div class="col-md-9">
+                <input class="form-control" type="date" jsf:id="date" jsf:value="#{patientTBean.dateNaissance}" required="true"/>
+                </div>
+                </div>
+                
+                <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Lieu de naissance :" for="lieu"></h:outputLabel>
+                <div class="col-md-9">
+                <h:inputText class="form-control" value="#{patientTBean.lieuNaissance}" id="lieu" required="true"></h:inputText>
+                </div>
+                </div>
+                
+                <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Service :" for="service"></h:outputLabel>
+                <div class="col-md-9">
+                <h:inputText class="form-control" value="#{patientTBean.serviceT}" id="service" required="true"></h:inputText><br/>
+                </div>
+                </div>
+                
+                <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Sexe :" for="sexe"></h:outputLabel>
+                <div class="col-md-9">
+                <h:selectOneRadio class="form-control" value="#{patientTBean.sexe}" id="sexe" required="true">
+                <f:selectItem itemValue="masculin" itemLabel="masculin"></f:selectItem>
+                <f:selectItem itemValue="feminin" itemLabel="feminin"></f:selectItem>
+                </h:selectOneRadio>
+                </div>
+                </div>
+                
+                <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Num securité sociale :" for="nums"></h:outputLabel>
+                <div class="col-md-9">
+                    <h:inputText class="form-control" value="#{patientTBean.numSecSoc}" id="nums" maxlength="13" validatorMessage="veuillez saisir un numero de Sec Soc valide">
+                    <f:validateRegex 
+                   pattern="[0-9]{13}" />
+                    </h:inputText>
+                     <h:message for="nums" style="color:red"  />
+                </div>
+                </div>
+                
+                <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Formation :" for="formation"></h:outputLabel>
+                <div class="col-md-9">
+                <h:inputText class="form-control" value="#{patientTBean.formation}" id="formation" required="true"></h:inputText>
+                </div>
+                </div>
+                
+                <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Service national :" for="servn"></h:outputLabel>
+                <div class="col-md-9">
+                <h:selectOneMenu class="form-control" id="servn" value="#{patientTBean.servN}" required="true">
+                <f:selectItem itemValue="accompli" itemLabel="accompli"/>
+                <f:selectItem itemValue="dispensé" itemLabel="dispensé"/>
+                <f:selectItem itemValue="inapte" itemLabel="inapte"/>
+            </h:selectOneMenu>
+                </div>
+                </div>
+                
+                <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Situation familliale :" for="sit"></h:outputLabel>
+                <div class="col-md-9">
+                <h:selectOneMenu class="form-control" id="sit" value="#{patientTBean.sfamiliale}">
+                <f:selectItem itemValue="celibataire" itemLabel="celibataire"/>
+                <f:selectItem itemValue="fiancé" itemLabel="fiancé"/>
+                <f:selectItem itemValue="marié" itemLabel="marié"/>
+                <f:selectItem itemValue="divorcé" itemLabel="divorcé"/>
+            </h:selectOneMenu>
+                </div>
+                </div>
+                
+                
+                
+                <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Aptitude au travail :" for="aptitude"></h:outputLabel>
+                <div class="col-md-9">
+                <h:selectOneMenu class="form-control" id="aptitude" value="#{patientTBean.aptitudeT}">
+                <f:selectItem itemValue="apte" itemLabel="Apte"/>
+                <f:selectItem itemValue="inapte temporaire" itemLabel="inapte temporaire"/>
+                <f:selectItem itemValue="inapte définitif" itemLabel="inapte temporaire"/>
+            </h:selectOneMenu>
+                </div>
+                </div>
+                
+                
+                <h:commandButton class="btn btn-primary btn-lg col-md-12" value="ajouter" actionListener="#{patientTBean.addPatient()}"></h:commandButton>
+
+            </h:form>
+        </div>
+        <div class="modal-footer">
+          
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+
+
+        
+        <script src="resources/js/jquery.js"></script>
+        <script src="resources/js/myjs.js"></script>
+        <script src="resources/js/bootstrap.min.js"></script>
+    </h:body>
+</html>
+

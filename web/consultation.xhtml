@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+<h:head>
+  <title>Consultations</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <h:outputStylesheet library="css" name="bootstrap.min.css" />
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+  </style>
+  
+  <script>
+ 
+  </script>
+</h:head>
+<h:body>
+<nav class="navbar navbar-inverse" style="height: 90px;">
+        <div class="container-fluid" style="height: 90px;" >
+            <div  class="navbar-header" style="height: 90px;" >
+      
+        <h:link class="navbar-brand" style="height: 90px;" outcome="listPatient.xhtml"><h:graphicImage library="img" name="home.png" height="100%" width="150px" />
+        </h:link>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar" style="margin-top: 40px;">
+      <ul class="nav navbar-nav">
+        <li ><h:link value="details" outcome="patient.xhtml" ></h:link></li>
+        <li ><h:link rendered="#{usersBean.show}" value="Visites" outcome="visite.xhtml" ></h:link></li>
+        <li class="active"><h:link rendered="#{usersBean.show}" value="Consultations" outcome="consultation.xhtml" ></h:link></li>
+        <li ><h:link value="Traitements" outcome="traitement.xhtml" ></h:link></li>
+        <li ><h:link value="Examens" outcome="examen.xhtml" ></h:link></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+          <li style="margin-right: 5px; color: white;">
+              <h4><h:outputText value="#{usersBean.user.nom}  #{usersBean.user.prenom}  "></h:outputText></h4>
+          </li>
+          
+        <li><h:form>
+                <h:commandButton class="btn btn-danger" style="margin-top: 7px;" value="deconexion" action="#{usersBean.logout()}" />
+    </h:form></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+  <div class="container">
+      <h:messages class="alert alert-danger">
+  
+            </h:messages>
+	<div class="row">
+		
+        
+        <div class="col-md-12">
+            <h3 class="col-md-9">Liste des consultations</h3>
+            <h:form>
+            <button jsf:rendered="#{usersBean.showC}" type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal">Ajouter une consultation</button>
+            </h:form>
+        </div>
+        </div>
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <h:dataTable id="myTable" value="#{consultationBean.consultList}" var="c" class="table table-bordred table-striped">   
+              
+                    <tbody>
+            <h:column>
+                <f:facet name = "header">Type</f:facet> 
+                <h:outputText value="#{c.typeC}"></h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name = "header">Motif</f:facet> 
+                <h:outputText value="#{c.motifC}"></h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name = "header">Date de consultation </f:facet> 
+                <h:outputText value="#{c.dateC}"></h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name = "header">Observation</f:facet> 
+                <h:outputText value="#{c.observation}"></h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name = "header">Traitement</f:facet> 
+                <h:outputText value="#{c.traitement}"></h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name = "header">Medecin</f:facet> 
+                <h:outputText value="#{consultationBean.NomMed(c.idUser)}"></h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name = "header">Tache</f:facet> 
+                <h:form>
+                    <h:commandButton rendered="#{usersBean.showC}" id="btnmd" class="btn btn-info" value="modifier" actionListener="#{consultationBean.showM(c.id_consult)}" onclick="montrer()" ></h:commandButton>
+                </h:form>
+                
+                
+            </h:column>
+    
+       
+    </tbody>
+        
+             </h:dataTable>
+                        
+                
+            </div>
+                    
+            
+        </div>
+	</div>
+</div>
+    
+    <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">x</button>
+          
+              <h2 class="modal-title">Nouvelle consultation </h2>
+        </div>
+        <div class="modal-body">
+            <h:form class="form-horizontal">
+                
+                <div class="form-group ">
+                    <h:outputLabel class="control-label col-md-3" value="Type :" for="type"></h:outputLabel>
+                    <div class="col-md-9">
+                        <h:selectOneMenu class="form-control" id="type" value="#{consultationBean.typeC}">
+                <f:selectItem itemValue="Accident de travail" itemLabel="Accident de travail"/>
+                <f:selectItem itemValue="Spontannée" itemLabel="Spontannée"/>
+            </h:selectOneMenu>
+                        
+                    </div>
+                </div>
+                
+                  <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Date de consultation :" for="date"></h:outputLabel>
+                <div class="col-md-9">
+                    <input class="form-control" type="date" jsf:id="date" jsf:value="#{consultationBean.dateC}"/>
+                </div>
+                </div>
+                
+                <div class="form-group">
+                    <h:outputLabel class="control-label col-md-3" value="Motif :" for="motif"></h:outputLabel>
+                    <div class="col-md-9">
+                        <h:inputText class="form-control" value="#{consultationBean.motifC}" id="motif"></h:inputText>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <h:outputLabel class="control-label col-md-3" value="Observation :" for="observation"></h:outputLabel>
+                    <div class="col-md-9">
+                        <h:inputText class="form-control" value="#{consultationBean.observation}" id="observation"></h:inputText>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <h:outputLabel class="control-label col-md-3" value="Traitement :" for="traitement"></h:outputLabel>
+                    <div class="col-md-9">
+                        <h:inputText class="form-control" value="#{consultationBean.traitement}" id="description"></h:inputText>
+                    </div>
+                </div>
+                <h:commandButton class="btn btn-primary btn-lg col-md-12" value="ajouter" actionListener="#{consultationBean.addConsult()}"></h:commandButton>
+            </h:form>
+        </div></div>
+       
+        <div class="modal-footer">
+          
+        </div>
+    </div></div>
+    
+    <h:panelGroup rendered="#{usersBean.showC}">
+        <h:messages>
+            
+        </h:messages>
+        <div class="row">
+        <div class="col-md-9">
+        <h:form class="form-horizontal">
+                
+                <div class="form-group ">
+                    <h:outputLabel class="control-label col-md-3" value="Type :" for="type"></h:outputLabel>
+                    <div class="col-md-9">
+                        <h:selectOneMenu class="form-control" id="type" value="#{consultationBean.consult.typeC}">
+                            <f:selectItem itemValue="" itemLabel=""/>
+                <f:selectItem itemValue="Accident de travail" itemLabel="Accident de travail"/>
+                <f:selectItem itemValue="Spontannée" itemLabel="Spontannée"/>
+            </h:selectOneMenu>
+                    </div>
+                </div>
+                
+                  <div class="form-group">
+                <h:outputLabel class="control-label col-md-3" value="Date de consultation :" for="date"></h:outputLabel>
+                <div class="col-md-9">
+                    
+                    <h:inputText class="form-control" value="#{consultationBean.consult.dateC}" validatorMessage="veuillez suivre ce format jj/mm/aaaa" id="date">
+                        <f:validateRegex 
+                   pattern="^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$" />
+                        </h:inputText>
+                        <h:message for="date" style="color:red"  />
+                </div>
+                </div>
+                
+                <div class="form-group">
+                    <h:outputLabel class="control-label col-md-3" value="Motif :" for="motif"></h:outputLabel>
+                    <div class="col-md-9">
+                        <h:inputText class="form-control"  id="motif" value="#{consultationBean.consult.motifC}" required="true"></h:inputText>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <h:outputLabel class="control-label col-md-3" value="Observation :" for="observation"></h:outputLabel>
+                    <div class="col-md-9">
+                        <h:inputText class="form-control"  id="observation" value="#{consultationBean.consult.observation}" required="true"></h:inputText>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <h:outputLabel class="control-label col-md-3" value="Traitement :" for="traitement"></h:outputLabel>
+                    <div class="col-md-9">
+                        <h:inputText class="form-control"  id="description" value="#{consultationBean.consult.traitement}" required="true"></h:inputText>
+                    </div>
+                </div>
+            <h:inputHidden value="#{consultationBean.consult.idUser}" />
+            <h:inputHidden value="#{consultationBean.consult.id_consult}"/>
+            <h:inputHidden value="#{consultationBean.consult.id_pat}"/>
+            <h:commandButton class="btn btn-info btn-lg col-md-offset-10 col-md-2" value="modifier" actionListener="#{consultationBean.editer()}" ></h:commandButton>
+            
+            </h:form>
+        </div></div>
+    </h:panelGroup>
+   
+
+
+    
+        <script src="resources/js/jquery.js"></script>
+        <script src="resources/js/myjs.js"></script>
+        <script src="resources/js/bootstrap.min.js"></script>
+</h:body>
+</html>
